@@ -13,9 +13,8 @@ export default {
     <aside class="side-bar">
         <Title class="page-title"/>
         <div class="button-container">
-            <button/>
-            <button/>
-            <button/>
+            <button>Home</button>
+            <button>Add movie</button>
         </div>
     </aside>
 </template>
@@ -39,6 +38,9 @@ export default {
             margin-bottom: 50%;
             border-radius: 5px;
             background-color: #b73765;
+            font-size: 1em;
+            font-weight: bold;
+            color: beige;
         }
     }
 </style>

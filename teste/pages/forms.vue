@@ -1,4 +1,3 @@
-
 <template>
-  <h1>Lero</h1>
+  <AddMovieForm/>
 </template>

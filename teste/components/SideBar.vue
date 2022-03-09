@@ -1,11 +1,6 @@
 <script>
 export default {
-    name: 'SideBar',
-    transition(to, from) {
-        if (!from) return 'slide-left'
-        
-        return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
-    }
+    name: 'SideBar'
 }
 </script>
 
@@ -14,7 +9,7 @@ export default {
         <Title class="page-title"/>
         <div class="button-container">
             <button>Home</button>
-            <button>Add movie</button>
+            <button @click="$emit('show-form-modal')">Add movie</button>
         </div>
     </aside>
 </template>

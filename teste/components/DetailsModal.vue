@@ -6,12 +6,12 @@
 
 <template>
   <div class="modal-overlay" 
-    @click="$emit('close-modal')">
+    @click="$emit('close-details-modal')">
 
     <div class="modal" @click.stop>
       <h1>{{movie.primaryTitle}}</h1>
       <h4>{{movie.genres.toString().replaceAll(',',' ')}}</h4>
-      <h7>{{movie.isAdult ? 'Classificação: +18' : ''}}</h7>
+      <h6>{{movie.isAdult ? 'Classificação: +18' : ''}}</h6>
 
       <div class="details-container">
         <div class="details">
@@ -22,7 +22,7 @@
         </div>
 
       </div>
-      <button @click="$emit('close-modal')">Sair</button>
+      <button @click="$emit('close-details-modal')">Sair</button>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script>
     export default {
         name: 'Card',
-        props: ["title", "color"],
+        props: ["title"],
         computed: {
             setColor() {
                 return this.color
@@ -12,12 +12,12 @@
 
 <template>
     <div class="card">
-        <div class="card-container" :style="{'border-color': setColor}">
+        <div class="card-container">
             <content class="card-data">
                 <slot/>
             </content>
             <div class="title-container">
-                <h1 :style="{'background-color': setColor}">{{this.title}}</h1>
+                <h1>{{this.title}}</h1>
             </div>
         </div>
     </div>

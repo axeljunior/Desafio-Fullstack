@@ -1,16 +1,20 @@
 <script>
   export default {
     name: 'MainPage',
+    watch: {
+      '$route.query': function() {
+        console.log(this.$router.query)
+      },
+    },
     methods: {
       setDetails(movie){
-        console.log(arguments)
         this.currentMovie = movie
-        this.showModal = true
+        this.showDetailsModal = true
       }
     },
     data(){
       return {
-        showModal: false,
+        showDetailsModal: false,
         moviePerPage: '',
         currentPage: '',
         movieList: '',
@@ -18,10 +22,13 @@
       }
     },
     async mounted() {
-      const jsonMovies = await this.$api.$get('/movies')
-      this.moviePerPage = jsonMovies.perPage
-      this.currentPage = jsonMovies.currentPage
-      this.movieList = jsonMovies.movies
+      console.log('/id=' + this.$route.query.id)
+
+      const data = await this.$api.$get('/' + this.$route.query.id)
+      console.log(data.movies)
+      this.moviePerPage = data.perPage
+      this.currentPage = data.currentPage
+      this.movieList = data.movies
     }
   }
 </script>
@@ -29,9 +36,9 @@
 <template>
     <main>
         <NavBar/>
-        <CardInfoModal v-if="showModal" @close-modal="showModal = false" :movie="currentMovie"/>
+        <DetailsModal v-if="showDetailsModal" @close-details-modal="showDetailsModal = false" :movie="currentMovie"/>
         <section>
-            <Card 
+            <Card
               class="card-movie"
               v-for="movie of movieList" 
               :key="movie.id" 

@@ -1,13 +1,24 @@
 <script>
 export default {
-  name: 'HomePage',
+  name: 'Layout',
+  methods: {
+    showModal(){
+      this.showFormModal = true
+    }
+  },
+  data(){
+    return {
+      showFormModal: false,
+    }
+  }
 }
 </script>
 
 <template>
   <div>
-    <div class="container">
-      <SideBar/>
+    <div class="container" >
+      <SideBar @show-form-modal="showModal()"/>
+      <FormModal v-if="showFormModal" @close-form-modal="showFormModal = false"/>
       <Nuxt/>
     </div>
   </div>

@@ -1,17 +1,10 @@
 const express = require('express')
-const data = require('./filmes.json')
 const router = express.Router()
+const movies = require('./services/movies')
 
-router.get('/', async (req, res) => {
-	return res.json(data)
-})
+router.get('/', movies.all)
 
-router.get('/:id', async (req, res) => {
-	const filtered = data.movies.filter(movie => {
-        if(movie.id === req.params.id) return movie
-    })
-    console.log(filtered)
-	return res.json(filtered)
-})
+router.get('/:search', movies.filter)
+router.post('/create', movies.create)
 
 module.exports = router

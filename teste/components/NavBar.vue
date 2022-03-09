@@ -2,15 +2,12 @@
 export default {
 	methods: {
 		handleSubmit(event) {
-			this.$router.query = {id: this.searchVar}
-			this.$router.push({ name: 'index', query: {id: this.searchVar}, replace: true})
-			// this.$router.replace({name: this.$router.path, query: {...this.$route.query, id: this.searchVar}})
-			// this.$router.reload()
+			this.$emit('search-movie',this.inputedValue)
 		}
 	},
 	data() {
 		return {
-			searchVar: "",
+			inputedValue: this.$route.query.id || "",
 		}
 	}
 }
@@ -19,7 +16,7 @@ export default {
 <template>
 	<nav class="nav-bar">
 		<form class="search-container" @submit.prevent="handleSubmit">
-			<input class="searchbar" type="text" placeholder="Search" v-model="searchVar">
+			<input class="searchbar" type="text" placeholder="Search" v-model="inputedValue">
 			<input class="submit-searchbar" type="submit">
 			<img src="~/assets/search.png" alt="searcIcon"/>
 		</form>

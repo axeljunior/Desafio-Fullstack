@@ -1,7 +1,11 @@
 <template>
   <div class="modal-overlay">
       <section class="modal">
+          
           <div class="form-container">
+              <div class="form-title-container">
+                <h1>Add new movie</h1>
+              </div>
               <FormInputText class="form-txt-input" :config="{label:'Id'}"/>
               <FormInputText class="form-txt-input" :config="{label:'Primary title'}"/>
               <FormInputText class="form-txt-input" :config="{label:'Original title'}"/>
@@ -32,7 +36,7 @@
     margin-top: 10%;
     padding: 60px 0;
     border-radius: 20px;
-   
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,20 +55,27 @@
     
         background-color: #b2c2bf;
         padding-right: 12px;
+        .form-title-container{
+          display: flex;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
         .form-button-container {
             display: flex;
             justify-content: center;
+            margin-bottom: 10px;
+
             .form-button {
-                width: 150px;
-                height: 40px;
-                border-radius: 16px;
-                margin-top: 50px;
-                
-                font-size: 0.87em;
-                font-weight: bold;
-                color: white;
-                
-                background-color: #b73765;
+              width: 150px;
+              height: 40px;
+              border-radius: 16px;
+              margin-top: 50px;
+              
+              font-size: 0.87em;
+              font-weight: bold;
+              color: white;
+              
+              background-color: #b73765;
             }
         }
       }

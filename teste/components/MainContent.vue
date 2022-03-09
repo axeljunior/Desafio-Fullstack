@@ -1,15 +1,27 @@
 <script>
   export default {
     name: 'MainPage',
-    watch: {
-      '$route.query': function() {
-        console.log(this.$router.query)
-      },
-    },
     methods: {
       setDetails(movie){
         this.currentMovie = movie
         this.showDetailsModal = true
+      },
+      async searchMovie(params){
+        if (!params) {
+          const data = await this.$api.$get('/')
+          
+          this.moviePerPage = data.perPage
+          this.currentPage = data.currentPage
+          this.movieList = data.movies
+        
+          this.$router.replace({name: 'index', query: {}})
+          return;
+        }
+        if(this.$route.query.id === params) return
+        this.$router.replace({name: this.$router.path, query: {...this.$route.query, id: params}})
+        const data = await this.$api.$get('/' + params)
+        this.movieList = data
+        console.log({data, params});
       }
     },
     data(){
@@ -22,10 +34,15 @@
       }
     },
     async mounted() {
-      console.log('/id=' + this.$route.query.id)
-
-      const data = await this.$api.$get('/' + this.$route.query.id)
-      console.log(data.movies)
+      if(this.$route.query.id){
+        const data = await this.$api.$get('/' + this.$route.query.id)
+        this.moviePerPage = 21
+        this.currentPage = 1
+        this.movieList = data
+        return;
+      }
+      
+      const data = await this.$api.$get('/')
       this.moviePerPage = data.perPage
       this.currentPage = data.currentPage
       this.movieList = data.movies
@@ -35,12 +52,12 @@
 
 <template>
     <main>
-        <NavBar/>
+        <NavBar @search-movie="searchMovie"/>
         <DetailsModal v-if="showDetailsModal" @close-details-modal="showDetailsModal = false" :movie="currentMovie"/>
         <section>
             <Card
               class="card-movie"
-              v-for="movie of movieList" 
+              v-for="movie of movieList.slice(0,this.moviePerPage)" 
               :key="movie.id" 
               :title="movie.originalTitle"
               @click.native="setDetails(movie)"/>

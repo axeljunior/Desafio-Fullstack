@@ -1,10 +1,9 @@
 <script>
 export default {
-  name: "form",
+  name: "FormModal",
   methods: {
 	async handleSubmit() {
 		const newMovie = {
-			"tconst": "51",
 			"titleType": "movie",
 			"primaryTitle": `${this.PrimaryTitle}`,
 			"originalTitle": `${this.originalTitle}`,
@@ -19,7 +18,7 @@ export default {
 				"numVotes": "175"
 			}
 		}
-		await this.$api.$post('/create',{body: newMovie})
+		await this.$api.$post('/create',newMovie)
 		this.$emit('close-form-modal')
 	}
   },

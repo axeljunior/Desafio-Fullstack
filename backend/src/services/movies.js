@@ -40,7 +40,7 @@ async function create(req, res){
   const movie = req.body;
   
   data.movies.push({
-    id: data.movies.length + 1,
+    "tconst": data.movies.length + 1,
     ...movie
   });
 

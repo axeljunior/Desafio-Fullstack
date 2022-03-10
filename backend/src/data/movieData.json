@@ -785,6 +785,22 @@
                 "averageRating": "4.2",
                 "numVotes": "33"
             }
+        },
+        {
+            "tconst": 50,
+            "titleType": "movie",
+            "primaryTitle": "teste",
+            "originalTitle": "lero",
+            "isAdult": "0",
+            "startYear": "lero",
+            "endYear": "\\N",
+            "runtimeMinutes": "\\N",
+            "genres": "Short",
+            "rating": {
+                "tconst": "tt0000048",
+                "averageRating": "4.9",
+                "numVotes": "175"
+            }
         }
     ]
 }

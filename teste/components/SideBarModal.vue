@@ -39,17 +39,17 @@ export default {
     justify-content: center;
     flex-direction: column;
 
-    aside, .button-container {
+    .side-bar-mobile, .button-container {
         display: flex;
         flex-direction: column;
-        height: 100vh;
         min-height: 582px;
     }
-    aside {
+
+    .side-bar-mobile {
         align-items: center;
         background-color: #b2c2bf;
+        height: 100vh;
         .button-container {
-            min-height: 350px;
             a {
                 height: 50px;
                 margin-bottom: 50%;
@@ -68,5 +68,9 @@ export default {
         }
     }
   }
-
+  @media (max-height: 580px) {
+    .side-bar-mobile {
+      padding-top: 45vh;
+    }
+  }
 </style>

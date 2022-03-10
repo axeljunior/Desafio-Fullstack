@@ -38,7 +38,7 @@ async function filter(req, res) {
 
 async function create(req, res){
   const movie = req.body;
-
+  
   data.movies.push({
     id: data.movies.length + 1,
     ...movie

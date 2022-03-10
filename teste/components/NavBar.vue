@@ -15,6 +15,7 @@ export default {
 
 <template>
 	<nav class="nav-bar">
+		<button class="toggle-button" @click="$emit('show-sidebar')">|||</button>
 		<form class="search-container" @submit.prevent="handleSubmit">
 			<input class="searchbar" type="text" placeholder="Search" v-model="inputedValue">
 			<input class="submit-searchbar" type="submit">
@@ -114,5 +115,21 @@ export default {
 				transform: scaleX(-1)
 			}
 		}
+		.toggle-button{
+			display: none;
+			height: 2rem;
+			width: 1.5rem;
+			font-size: 1em;
+			transform: rotate(90deg);
+			background-color: #98b6b0;
+			border-radius: 3px;
+			font-weight: bold;
+			color: rgba(255, 255, 255, 0.575);
+		}
 	}
+	@media (max-width: 768px) {
+		.toggle-button {
+			display: inline-block !important;
+		}
+  	}
 </style>

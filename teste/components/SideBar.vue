@@ -8,7 +8,7 @@ export default {
     <aside class="side-bar">
         <Title class="page-title"/>
         <div class="button-container">
-            <button>Home</button>
+            <a href="/"><button href="/">Home</button></a>
             <button @click="$emit('show-form-modal')">Add movie</button>
         </div>
     </aside>
@@ -26,6 +26,10 @@ export default {
         background-color: #b2c2bf;
         .button-container {
             min-height: 350px;
+            a {
+                height: 50px;
+                margin-bottom: 50%;
+            }
         }
         button {
             width: 140px;
@@ -33,6 +37,7 @@ export default {
             margin-bottom: 50%;
             border-radius: 5px;
             background-color: #b73765;
+            border-color: #d7497c;
             font-size: 1em;
             font-weight: bold;
             color: beige;

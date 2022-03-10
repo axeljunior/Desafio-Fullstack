@@ -4,6 +4,9 @@ export default {
   methods: {
     showModal(){
       this.showFormModal = true
+    },
+    teste(){
+      console.log("Lero")
     }
   },
   data(){
@@ -19,7 +22,7 @@ export default {
     <div class="container" >
       <SideBar @show-form-modal="showModal()"/>
       <FormModal v-if="showFormModal" @close-form-modal="showFormModal = false"/>
-      <Nuxt/>
+      <Nuxt @show-sidebar="teste()"/>
     </div>
   </div>
 </template>

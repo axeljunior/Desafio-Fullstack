@@ -39,7 +39,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-end;
 
         height: 100%;
         .card-data{
@@ -48,8 +47,9 @@
         }
         .title-container{
             justify-self: flex-end;
+            margin-top: 5px;
             h1{
-                padding: 0 10px;
+                padding: 0 5px;
                 font-size: 12px;
                 max-width: 118px;
                 word-wrap: break-word;

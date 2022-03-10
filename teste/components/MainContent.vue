@@ -6,14 +6,15 @@
         this.currentMovie = movie
         this.showDetailsModal = true
       },
+      async loadHome(){
+        const data = await this.$api.$get('/')
+        this.moviePerPage = data.perPage
+        this.currentPage = data.currentPage
+        this.movieList = data.movies
+      },
       async searchMovie(params){
         if (!params) {
-          const data = await this.$api.$get('/')
-          
-          this.moviePerPage = data.perPage
-          this.currentPage = data.currentPage
-          this.movieList = data.movies
-        
+          await this.loadHome()
           this.$router.replace({name: 'index', query: {}})
           return;
         }
@@ -21,7 +22,6 @@
         this.$router.replace({name: this.$router.path, query: {...this.$route.query, id: params}})
         const data = await this.$api.$get('/' + params)
         this.movieList = data
-        console.log({data, params});
       }
     },
     data(){
@@ -41,11 +41,7 @@
         this.movieList = data
         return;
       }
-      
-      const data = await this.$api.$get('/')
-      this.moviePerPage = data.perPage
-      this.currentPage = data.currentPage
-      this.movieList = data.movies
+      await this.loadHome()
     }
   }
 </script>

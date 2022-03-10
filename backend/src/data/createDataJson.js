@@ -14,7 +14,6 @@ async function load(){
     let basicsResult = await cjson({delimiter: "\t",
     }).fromFile(path.join(__dirname,'title.basics.teste.tsv'));
     
-    // ratingResult.slice(0,10).forEach(element => console.log(element))
     basicsResult.forEach((element,index) => {
         objectList.push({
             ...element,

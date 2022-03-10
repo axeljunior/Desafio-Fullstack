@@ -1,8 +1,8 @@
 # Desafio Full-Stack :: Bonaparte
 
 ## Instalação
-
 Você precisará ter o [NodeJS](https://nodejs.org) instalado na sua máquina, e, após isso, clonar este repositório:
+
 ```sh
   $ git clone https://github.com/axeljunior/Teste-Bonaparte
 ```
@@ -10,7 +10,7 @@ Você precisará ter o [NodeJS](https://nodejs.org) instalado na sua máquina, e
 Depois disso, instale as dependências do Front-end e do Back-end:
 ```sh
   $ cd Teste-Bonaparte/backend && npm install
-  $ cd ../teste && npm install
+  $ cd Teste-Bonaparte/frontend && npm install
 ```
 
 ## Executando a aplicação

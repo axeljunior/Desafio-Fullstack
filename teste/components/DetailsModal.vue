@@ -8,9 +8,8 @@
   <div class="modal-overlay" 
     @click="$emit('close-details-modal')">
 
-    <div class="modal" @click.stop>
-
-      <div class="details-container">
+    <div class="modal">
+      <div class="details-container" @click.stop>
         <h1>{{movie.primaryTitle}}</h1>
         <h4>{{movie.genres.toString().replaceAll(',',' - ')}}</h4>
         <h6>{{movie.isAdult ? 'Classificação: +18' : ''}}</h6>

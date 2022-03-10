@@ -40,8 +40,8 @@ export default {
 <template>
   <div class="modal-overlay"
   	@click="$emit('close-form-modal')">
-	<section class="modal" @click.stop> 
-	  <form class="form-container" @submit.prevent="handleSubmit">
+	<section class="modal"> 
+	  <form class="form-container" @submit.prevent="handleSubmit" @click.stop>
 		  <div class="form-title-container">
 			<h1>Add new movie</h1>
 		  </div >

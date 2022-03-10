@@ -48,7 +48,7 @@
 
 <template>
     <main>
-        <NavBar @search-movie="searchMovie"/>
+        <NavBar @search-movie="searchMovie" v-on="$listeners"/>
         <DetailsModal v-if="showDetailsModal" @close-details-modal="showDetailsModal = false" :movie="currentMovie"/>
         <section>
             <Card

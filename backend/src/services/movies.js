@@ -1,6 +1,8 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
+require('dotenv').config()
 
-const uri = "mongodb+srv://axeljunior:semsenha@cluster0.ack1z.mongodb.net/teste-bonaparte?retryWrites=true&w=majority"
+const uri = process.env.MONGO_URI
+
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -8,7 +10,6 @@ const client = new MongoClient(uri, {
 })
 
 async function all(req, res) {
-  console.log(req.params)
   await client.connect()
 
   const collection = client.db("teste-bonaparte").collection("movies")

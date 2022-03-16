@@ -6,7 +6,6 @@ export default {
       this.showFormModal = true
     },
     showModalSidebar(){
-      console.log("lero")
       this.showSideBar = true
     }
   },

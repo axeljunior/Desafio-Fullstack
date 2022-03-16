@@ -17,7 +17,7 @@
           <p><span>Titulo Original:</span> {{movie.originalTitle}} <br/>
           <span>Duração:</span> {{movie.runtimeMinutes}}min<br/>
           <span>Ano de Lançamento:</span> {{movie.startYear}} <br/> 
-          <span>Avaliação:</span> {{movie.rating.averageRating}}</p>
+          <span>Avaliação:</span> {{movie.rating ? movie.rating.averageRating : '\\N'}}</p>
         </div>
         <div class="details-button-container">
           <button class="details-button" @click="$emit('close-details-modal')">Sair</button>

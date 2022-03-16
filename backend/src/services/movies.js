@@ -8,6 +8,7 @@ const client = new MongoClient(uri, {
 })
 
 async function all(req, res) {
+  console.log(req.params)
   await client.connect()
 
   const collection = client.db("teste-bonaparte").collection("movies")
@@ -15,11 +16,7 @@ async function all(req, res) {
   // const movies = await collection.find().skip(3).limit(3).toArray()
   await client.close()
 
-  return await res.json({
-    currentPage: 1,
-    perPage: 21,
-    movies,
-  })
+  return await res.json(movies)
 }
 
 async function filterById(id) {
@@ -45,7 +42,9 @@ async function filterByTitle(title) {
 }
 
 async function filter(req, res) {
+  console.log(req.params.page,req.params.search)
   const search = req.params.search
+  
   const IsSearchById = !isNaN(search)
   let result = null
 
@@ -62,8 +61,7 @@ async function create(req, res) {
   await client.connect()
 
   const collection = client.db("teste-bonaparte").collection("movies")
-  const resultado = await collection.insertOne(req.body)
-  console.log({ resultado })
+  await collection.insertOne(req.body)
   await client.close()
 
   return res.json({ status: "ok" })

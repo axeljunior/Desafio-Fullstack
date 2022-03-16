@@ -8,9 +8,9 @@
       },
       async loadHome(){
         const data = await this.$api.$get('/')
-        this.moviePerPage = data.perPage
-        this.currentPage = data.currentPage
-        this.movieList = data.movies
+        this.moviePerPage = 21
+        this.currentPage = 1
+        this.movieList = data
       },
       async searchMovie(params){
         if (!params) {
@@ -27,8 +27,8 @@
     data(){
       return {
         showDetailsModal: false,
-        moviePerPage: '',
-        currentPage: '',
+        moviePerPage: 21,
+        currentPage: 1,
         movieList: '',
         currentMovie: null,
       }

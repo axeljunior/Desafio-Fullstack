@@ -18,8 +18,8 @@
           this.$router.replace({name: 'index', query: {}})
           return;
         }
-        if(this.$route.query.id === params) return
-        this.$router.replace({name: this.$router.path, query: {...this.$route.query, id: params}})
+        if(this.$route.query.search === params) return
+        this.$router.replace({name: this.$router.path, query: {...this.$route.query, search: params}})
         const data = await this.$api.$get('/' + params)
         this.movieList = data
       }
@@ -34,8 +34,8 @@
       }
     },
     async mounted() {
-      if(this.$route.query.id){
-        const data = await this.$api.$get('/' + this.$route.query.id)
+      if(this.$route.query.search){
+        const data = await this.$api.$get('/' + this.$route.query.search)
         this.moviePerPage = 21
         this.currentPage = 1
         this.movieList = data

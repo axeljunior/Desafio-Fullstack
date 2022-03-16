@@ -1,55 +1,76 @@
-const fs = require('fs');
-const path = require('path');
-const data = JSON.parse(fs.readFileSync(path.join(__dirname,'../data/movieData.json')))
+const { MongoClient, ServerApiVersion } = require("mongodb");
+
+const uri = "mongodb+srv://axeljunior:semsenha@cluster0.ack1z.mongodb.net/teste-bonaparte?retryWrites=true&w=majority"
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+})
 
 async function all(req, res) {
-	return res.json(data)
+  await client.connect()
+
+  const collection = client.db("teste-bonaparte").collection("movies")
+  const movies = await collection.find().limit(21).toArray()
+  // const movies = await collection.find().skip(3).limit(3).toArray()
+  await client.close()
+
+  return await res.json({
+    currentPage: 1,
+    perPage: 21,
+    movies,
+  })
 }
 
-async function filterById(movies, id) {
-  const filtered = movies.filter(movie => {
-    if(movie.id === id) return movie
-  })
-  console.log(filtered)
-  return filtered
+async function filterById(id) {
+  await client.connect()
+
+  const collection = client.db("teste-bonaparte").collection("movies")
+  const movies = await collection.find({ tconst: id }).toArray()
+  await client.close()
+
+  return movies
 }
 
-async function filterByTitle(movies, title) {
-  const filtered = movies.filter(movie => {
-    if(movie.originalTitle.toLowerCase().includes(title.toLowerCase())) return movie
-  })
-  console.log({filtered})
-  return filtered
+async function filterByTitle(title) {
+  await client.connect()
+
+  const collection = client.db("teste-bonaparte").collection("movies")
+  const movies = await collection
+    .find({ originalTitle: {$regex: title} })
+    .toArray()
+  await client.close()
+
+  return movies
 }
 
 async function filter(req, res) {
-  const search = req.params.search;
-  const IsSearchById = !isNaN(search);
-  let result = null;
+  const search = req.params.search
+  const IsSearchById = !isNaN(search)
+  let result = null
 
-  if (IsSearchById){
-    result = await filterById(data.movies, search);
-  }else{
-    result = await filterByTitle(data.movies, search);
+  if (IsSearchById) {
+    result = await filterById(search)
+  } else {
+    result = await filterByTitle(search)
   }
 
   return res.json(result)
 }
 
-async function create(req, res){
-  const movie = req.body;
-  
-  data.movies.push({
-    "tconst": data.movies.length + 1,
-    ...movie
-  });
+async function create(req, res) {
+  await client.connect()
 
-  fs.writeFileSync(path.join(__dirname,'../data/movieData.json'), JSON.stringify(data, null, 4));
+  const collection = client.db("teste-bonaparte").collection("movies")
+  const resultado = await collection.insertOne(req.body)
+  console.log({ resultado })
+  await client.close()
 
-  return res.json({status: 'ok'});
+  return res.json({ status: "ok" })
 }
 module.exports = {
   all,
   filter,
   create,
+  client
 }

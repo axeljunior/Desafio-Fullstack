@@ -12,7 +12,7 @@
       <div class="details-container" @click.stop>
         <h1>{{movie.primaryTitle}}</h1>
         <h4>{{movie.genres.toString().replaceAll(',',' - ')}}</h4>
-        <h6>{{movie.isAdult ? 'Classificação: +18' : ''}}</h6>
+        <h6>{{movie.isAdult === '1' ? 'Classificação: +18' : ''}}</h6>
         <div class="details">
           <p><span>Titulo Original:</span> {{movie.originalTitle}} <br/>
           <span>Duração:</span> {{movie.runtimeMinutes}}min<br/>

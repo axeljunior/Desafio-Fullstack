@@ -10,7 +10,7 @@ export default {
 			"isAdult": `${this.isAdult ? '0' : '1'}`,
 			"startYear": `${this.releaseYear.toString()}`,
 			"endYear": "\\N",
-			"runtimeMinutes": "\\N",
+			"runtimeMinutes": `${this.runningTime.toString()}`,
 			"genres": "Short",
 			"rating": {
 				"tconst": "tt0000048",

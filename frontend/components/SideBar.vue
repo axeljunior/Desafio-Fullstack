@@ -41,6 +41,7 @@ export default {
             font-size: 1em;
             font-weight: bold;
             color: beige;
+            cursor: pointer;
         }
     }
 </style>

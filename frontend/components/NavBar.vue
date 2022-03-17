@@ -1,8 +1,11 @@
 <script>
 export default {
 	methods: {
-		handleSubmit(event) {
+		handleSubmit() {
 			this.$emit('search-movie',this.inputedValue)
+		},
+		handleNavigate(btn) {
+			this.$emit('navigate-page',btn)
 		}
 	},
 	data() {
@@ -23,14 +26,14 @@ export default {
 		</form>
 		<div class="button-container">
 			<span id="button-previous" class="big">
-				<button/>
+				<button @click="handleNavigate('prev')"/>
 				<img src="~/assets/arrow.png" alt="searcIcon"/>
 			</span>
-			<button>1</button>
+			<!-- <button>1</button>
 			<button>2</button>
-			<button>3</button>
+			<button>3</button> -->
 			<span id="button-next" class="big">
-				<button/>
+				<button @click="handleNavigate('next')"/>
 				<img src="~/assets/arrow.png" alt="searcIcon"/>
 			</span>
 		</div>
@@ -78,7 +81,8 @@ export default {
 		.button-container{
 			display: flex;
 			align-items: center;
-
+			justify-content: space-between;
+			width: 5vw;
 			button {
 				height: 1rem;
 				width: 1rem;
@@ -96,11 +100,17 @@ export default {
 			.big > button{
 				height: 1.5em;
 				width: 1.5em;
+				cursor: pointer;
 			}
 			.big > img{
 				position: absolute;
 				width: 15px;
 				height: 15px;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				pointer-events: none;
 			}
 			#button-next, #button-previous{
 				position: relative;

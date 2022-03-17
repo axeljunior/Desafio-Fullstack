@@ -9,53 +9,67 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 })
 
-async function all(req, res) {
+async function consultDB(page, filter) {
+  let movies = null
+  let count = 0;
+
   await client.connect()
 
   const collection = client.db("teste-bonaparte").collection("movies")
-  const movies = await collection.find().limit(21).toArray()
-  // const movies = await collection.find().skip(3).limit(3).toArray()
-  await client.close()
 
-  return await res.json(movies)
-}
-
-async function filterById(id) {
-  await client.connect()
-
-  const collection = client.db("teste-bonaparte").collection("movies")
-  const movies = await collection.find({ tconst: id }).toArray()
-  await client.close()
-
-  return movies
-}
-
-async function filterByTitle(title) {
-  await client.connect()
-
-  const collection = client.db("teste-bonaparte").collection("movies")
-  const movies = await collection
-    .find({ originalTitle: {$regex: title} })
-    .toArray()
-  await client.close()
-
-  return movies
-}
-
-async function filter(req, res) {
-  console.log(req.params.page,req.params.search)
-  const search = req.params.search
-  
-  const IsSearchById = !isNaN(search)
-  let result = null
-
-  if (IsSearchById) {
-    result = await filterById(search)
-  } else {
-    result = await filterByTitle(search)
+  if(page) {
+    const currentPage = parseInt(page)
+    if (filter) {
+      movies = await collection
+        .find(filter)
+        .skip(21*(currentPage-1)).limit(21).toArray()
+      count = await collection.countDocuments(filter)
+    }else{
+      movies = await collection.find().skip(21*(currentPage-1)).limit(21).toArray()
+      count = await collection.countDocuments()
+    }
+  }else{
+    if (filter){
+      movies = await collection.find(filter).limit(21).toArray()
+      count = await collection.countDocuments(filter)
+    }else{
+      movies = await collection.find().limit(21).toArray()
+      count = await collection.countDocuments()
+    }
   }
 
-  return res.json(result)
+  await client.close()
+
+  return { page: Math.ceil(count / 21), movies }
+}
+
+async function movies(req, res) {
+  const { page, filter, type } = req.query;
+  
+  let reponse;
+  switch(type){
+    case 'id':
+      reponse = await consultDB(page, { tconst: filter })
+      break;
+    case 'year':
+      reponse = await consultDB(page, { year: filter })
+      break;
+    case 'title':
+    default:
+      if (filter){
+        reponse = await consultDB(page, { 
+          originalTitle: {
+            $regex: filter.includes("$") ? filter : '^' + filter, 
+            $options: 'i'
+          } 
+        })
+      }
+      else{
+        reponse = await consultDB(page)
+      }
+      break;
+  }
+  return await res.json(reponse)
 }
 
 async function create(req, res) {
@@ -67,9 +81,9 @@ async function create(req, res) {
 
   return res.json({ status: "ok" })
 }
+
 module.exports = {
-  all,
-  filter,
+  movies,
   create,
   client
 }

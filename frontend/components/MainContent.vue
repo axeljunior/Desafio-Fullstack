@@ -45,7 +45,6 @@
         const page = this.currentPage
         
         this.$router.replace({name: this.$router.path, query: {...this.$route.query, page, filter}})
-
         const data = await this.$api.$get('/' + `?${qs.stringify({page, filter})}`);
         this.movieList = data.movies
         this.maxPage = data.page

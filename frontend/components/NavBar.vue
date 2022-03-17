@@ -11,6 +11,7 @@ export default {
 	data() {
 		return {
 			inputedValue: this.$route.query.id || "",
+			options:['Title','Year']
 		}
 	}
 }
@@ -21,6 +22,12 @@ export default {
 		<button class="toggle-button" @click="$emit('show-sidebar')">|||</button>
 		<form class="search-container" @submit.prevent="handleSubmit">
 			<input class="searchbar" type="text" placeholder="Search" v-model="inputedValue">
+			<select class="select-btn-searchbar" type="select">
+				<option 
+					v-for="opt of options" 
+					:key="opt"
+					:value="opt">{{opt}}</option>
+			</select>
 			<input class="submit-searchbar" type="submit">
 			<img src="~/assets/search.png" alt="searcIcon"/>
 		</form>
@@ -51,13 +58,19 @@ export default {
 		align-items: center;
 
 		.search-container{
-			width: 50%;
+			width: 30vw;
 			position: relative;
-
+			display: flex;
+			.select-btn-searchbar{
+				padding-right: 10px;
+				border-radius: 3px;
+				border: 1px solid black;
+				color: rgba(0, 0, 0, 0.5);
+			}
 			.searchbar{
 				width: 100%;
 				height: 22px;
-				padding-left: 5px;
+				padding-left: 20px;
 				border-radius: 3px;
 				border: 1px solid black;
 			}
@@ -68,7 +81,7 @@ export default {
 				width: 15px;
 				height: 15px;
 				position: absolute;
-				right: 5px;
+				left: 5px;
 				top: calc(50% - 8px);
 
 				-webkit-user-select: none;
@@ -82,7 +95,7 @@ export default {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			width: 5vw;
+			width: 10vw;
 			button {
 				height: 1rem;
 				width: 1rem;
@@ -140,6 +153,12 @@ export default {
 	@media (max-width: 768px) {
 		.toggle-button {
 			display: inline-block !important;
+		}
+		.nav-bar > .button-container {
+		    width: 15vw;
+		}
+		.nav-bar > .search-container {
+		    width: 50vw;
 		}
   	}
 </style>

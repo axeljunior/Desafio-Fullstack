@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  frontend-teste-bonaparte:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: frontend-teste-bonaparte
+    ports:
+      - "3000:5000"
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge

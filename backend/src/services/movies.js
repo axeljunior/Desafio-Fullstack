@@ -11,7 +11,7 @@ const client = new MongoClient(uri, {
 
 async function consultDB(page, filter) {
   let movies = null
-  let count = 0;
+  let count = 0
 
   await client.connect()
 

@@ -6,6 +6,7 @@
     methods: {
       setDetails(movie){
         this.currentMovie = movie
+        
         this.showDetailsModal = true
       },
       async loadHome(){

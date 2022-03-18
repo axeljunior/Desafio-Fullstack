@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  backend-teste-bonaparte:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: backend-teste-bonaparte
+    environment:
+      - MONGO_URI=mongodb+srv://axeljunior:semsenha@cluster0.ack1z.mongodb.net/teste-bonaparte?retryWrites=true&w=majority
+    ports:
+      - "3333:3333"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge

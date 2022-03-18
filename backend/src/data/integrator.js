@@ -68,9 +68,13 @@ async function load() {
   console.log("Carregamento realizado com sucesso!")
   console.log("Transformando dados ...")
 
+  const fileStream = fs.createReadStream(
+    path.join(__dirname, "title.basics.tsv")
+  );
+
   await cjson({ delimiter: "\t" })
-    .fromStream(fs.createReadStream(path.join(__dirname, "title.basics.tsv")))
-    .subscribe((element) => {
+    .fromStream(fileStream)
+    .subscribe((element, line) => {
       const filme = element
       const index = ratingResult.findIndex(
         (rating) => rating.tconst === filme.tconst
@@ -82,6 +86,7 @@ async function load() {
       filmes.push(element)
 
       finalResult.movies = filmes
+      process.stdout.write(`Linha atual: ${line} (total de aproximadamente 1500000)        \r`)
       if (filmes.length % 1000 === 0) {
         fs.writeFileSync(
           path.join(__dirname, "movieData.json"),
@@ -95,8 +100,6 @@ async function load() {
   )
 }
 
-// await load();
-
 async function save() {
   const movieData = fs.readFileSync(path.join(__dirname,'movieData.json'))
   
@@ -107,13 +110,25 @@ async function save() {
 
   console.log("Populando banco...")
 
-  const quantityPerSlice = 50000
+  const quantityPerSlice = 50
   const quantityOfSlice = Math.ceil(jsonData.movies.length / quantityPerSlice)
   let start = 0
   let end = quantityPerSlice
 
   for(let i=0; i < quantityOfSlice; i++){
-    await collection.insertMany(jsonData.movies.slice(start,end))
+    const elements = jsonData.movies.slice(start, end)
+    for (let j = 0; j < elements.length; j++) {
+      const el = elements[j]
+
+      await collection.updateOne(
+        { tconst: el.tconst },
+        { $set: el },
+        {
+          upsert: true,
+        }
+      );
+    }
+    // await collection.insertMany(jsonData.movies.slice(start,end))
     start += quantityPerSlice
     end += quantityPerSlice
   }
@@ -122,4 +137,10 @@ async function save() {
   await client.close()
   
 }
-save()
+
+async function integrate(){
+  await load()
+  await save()
+}
+
+module.exports = integrate;
